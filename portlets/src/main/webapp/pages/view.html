@@ -5,7 +5,21 @@
     <link rel="stylesheet" href="/crud-portlets/css/bootstrap.min.css">
     <!--script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script-->
-
+<style>
+    .body-sign {
+    display: table;
+    height: 100vh;
+    margin: 0 auto;
+    max-width: 500px;
+    padding: 0 15px;
+    width: 100%;
+    }
+    .body-sign .center-sign {
+    display: table-cell;
+    padding-top: 20px;
+    vertical-align: middle;
+    }
+</style>
 <title></title>
 </head>
 <BODY>
@@ -35,9 +49,9 @@ angular.bootstrap(rootPage,['appName']);
 //angularcec;
 //});
 </script>
-
-<div ng-controller="repeatedProducts">
-    <div class="container">
+<section style="body-sign">
+<div ng-controller="repeatedProducts" style="center-sign">
+    <div>
     <!--div-->
         <div class="table-responsive">
         <!--div-->
@@ -74,5 +88,6 @@ angular.bootstrap(rootPage,['appName']);
         </li>
     </ul-->
 </div>
+</section>
 </BODY>
 </html>
