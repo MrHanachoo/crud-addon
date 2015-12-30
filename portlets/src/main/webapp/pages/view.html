@@ -39,7 +39,6 @@ var manageProducts=function manageProducts($scope, $http) {
     $scope.addProduct = function(product){
 if(productForm.price.validity.valid){
 var pr = {category:product.category,company:product.company,label:product.label,price:product.price};
-alert("passage: "+ i++);
 $http.post('/rest/productdata/new',pr).success(function(data) {
 $http.get('/rest/productdata/productlist').success(function(data) {
             $scope.products = data;
@@ -138,7 +137,7 @@ return false;
                 </thead>
                 <tbody>
                 <tr ng-repeat="product in products">
-                    <td></td>
+                    <td>{{product.id}}</td>
                     <td>{{product.label}}</td>
                     <td>{{product.category}}</td>
                     <td>{{product.company}}</td>

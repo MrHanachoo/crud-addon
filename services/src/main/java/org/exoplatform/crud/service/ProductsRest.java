@@ -59,6 +59,7 @@ public class ProductsRest implements ResourceContainer {
             List<Product> products=genericDAO.findAll();
             for(Product product:products){
                 JSONObject json = new JSONObject();
+                json.put("id",product.getId());
                 json.put("category",product.getCategory());
                 json.put("company",product.getCompany());
                 json.put("label",product.getLabel());
