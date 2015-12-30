@@ -1,0 +1,112 @@
+.body-sign {
+    display: table;
+    height: 100vh;
+    margin: 0 auto;
+    max-width: 500px;
+    padding: 0 15px;
+    width: 100%;
+}
+
+body {
+    color: #777;
+    font-family: "Open Sans",Arial,sans-serif;
+    font-size: 13px;
+    line-height: 22px;
+}
+
+.body-sign .center-sign {
+    display: table-cell;
+    padding-top: 20px;
+    vertical-align: middle;
+}
+body a, body a:focus, body a:hover, body a:active, body a:visited {
+    outline: medium none !important;
+}
+a, .btn-link {
+    color: #0088cc;
+}
+
+.body-sign .panel-sign {
+    background: transparent none repeat scroll 0 0;
+}
+.panel {
+    background: transparent none repeat scroll 0 0;
+    border: medium none;
+    box-shadow: none;
+}
+.mt-xl {
+    margin-top: 25px !important;
+}
+
+.body-sign .panel-sign .panel-title-sign .title {
+    background-color: #ccc;
+    border-radius: 5px 5px 0 0;
+    color: #fff;
+    display: inline-block;
+    font-size: 1.2rem;
+    line-height: 2rem;
+    padding: 13px 17px;
+    vertical-align: bottom;
+}
+.m-none {
+    margin: 0 !important;
+}
+.text-uppercase {
+    text-transform: uppercase;
+}
+.text-weight-bold {
+    font-weight: 700;
+}
+
+.mr-xs {
+    margin-right: 5px !important;
+}
+.fa {
+    display: inline-block;
+    font-family: FontAwesome;
+    font-feature-settings: normal;
+    font-kerning: auto;
+    font-language-override: normal;
+    font-size: inherit;
+    font-size-adjust: none;
+    font-stretch: normal;
+    font-style: normal;
+    font-synthesis: weight style;
+    font-variant: normal;
+    font-weight: normal;
+    line-height: 1;
+    text-rendering: auto;
+}
+
+.body-sign .panel-sign .panel-body {
+    background: #fff none repeat scroll 0 0;
+    border-radius: 5px 0 5px 5px;
+    border-top: 5px solid #ccc;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    padding: 33px 33px 15px;
+}
+.panel-body {
+    background: #fdfdfd none repeat scroll 0 0;
+    border-radius: 5px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+.mb-lg {
+    margin-bottom: 20px !important;
+}
+
+input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], textarea {
+}
+.input-lg {
+    border-radius: 4px;
+}
+
+body .btn-primary {
+    background-color: #ccc;
+    border-color: #ccc #ccc #b3b3b3;
+    color: #fff;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+body .btn {
+    white-space: normal;
+}

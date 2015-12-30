@@ -14,13 +14,13 @@
 <gatein-resources xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gatein.org/xml/ns/gatein_resources_1_3 http://www.gatein.org/xml/ns/gatein_resources_1_3"
    xmlns="http://www.gatein.org/xml/ns/gatein_resources_1_3">
 
-  <!--portlet-skin>
-    <application-name>homepage-portlets</application-name>
-    <portlet-name>WhoIsOnLinPortlet</portlet-name>
+  <portlet-skin>
+    <application-name>crud-portlets</application-name>
+    <portlet-name>CrudPortlet</portlet-name>
     <skin-name>Default</skin-name>
-    <css-path>/skin/css/whoisonline.css</css-path>
+    <css-path>/css/theme.css</css-path>
     <css-priority>1</css-priority>
-  </portlet-skin-->
+  </portlet-skin>
    <portlet>
       <name>CrudPortlet</name>
       <module>

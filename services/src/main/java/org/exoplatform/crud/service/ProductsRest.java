@@ -8,9 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.annotation.security.RolesAllowed;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -29,6 +27,26 @@ public class ProductsRest implements ResourceContainer {
         genericDAO=new GenericDAO<Product>(Product.class);
 
     }
+
+    @RolesAllowed("users")
+    @POST
+    @Path("new")
+    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Response addProduct(Product product)   {
+        //
+        // Code processing the input parameters
+        //
+        String response = "";
+        if(product != null){
+            genericDAO.persist(product);
+            response = "{\"message\":\"Post created product: The category: " + product.getCategory() + ", company: " + product.getCompany()
+                    + ", label: " + product.getLabel() + ", price: " + product.getPrice()+"\"}";
+        }
+        return Response.ok(response).build();
+    }
+
+
+
     @RolesAllowed("users")
     @GET
     @Path("productlist")
@@ -37,7 +55,7 @@ public class ProductsRest implements ResourceContainer {
         JSONObject jsonGlobal = new JSONObject();
         JSONArray jsonArray = new JSONArray();
         try {
-            mockFillProducts();
+            //mockFillProducts();
             List<Product> products=genericDAO.findAll();
             for(Product product:products){
                 JSONObject json = new JSONObject();
@@ -53,6 +71,8 @@ public class ProductsRest implements ResourceContainer {
             return Response.status(HTTPStatus.INTERNAL_ERROR).build();
         }
     }
+
+
 
     public void mockFillProducts(){
         for(int i=0;i<10;i++){
