@@ -61,6 +61,23 @@ public class GenericDAO<T> {
 
     }
 
+    public void merge(T t){
+        Session session=getSession();
+        try {
+            Transaction tx=session.beginTransaction();
+            session.merge(t);
+            tx.commit();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        finally {
+            if(session.isOpen())
+                session.close();
+        }
+
+    }
+
     public void delete(T t){
         Session session=getSession();
         try{

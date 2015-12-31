@@ -13,6 +13,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
+import java.text.ParseException;
 import java.util.List;
 
 /**
@@ -30,19 +31,41 @@ public class ProductsRest implements ResourceContainer {
 
     @RolesAllowed("users")
     @POST
-    @Path("new")
+    @Path("submit")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response addProduct(Product product)   {
-        //
-        // Code processing the input parameters
-        //
-        String response = "";
-        if(product != null){
-            genericDAO.persist(product);
-            response = "{\"message\":\"Post created product: The category: " + product.getCategory() + ", company: " + product.getCompany()
-                    + ", label: " + product.getLabel() + ", price: " + product.getPrice()+"\"}";
+    public Response editProduct(Product product)   {
+        Product productBean = null;
+        if(product.getId() != 0){
+             productBean = (Product) genericDAO.findById(product.getId());
+            if (productBean != null) {
+                productBean.setCategory(product.getCategory());
+                productBean.setPrice(product.getPrice());
+                productBean.setLabel(product.getLabel());
+                productBean.setCompany(product.getCompany());
+
+            }
         }
-        return Response.ok(response).build();
+
+        if( productBean== null && product != null){
+            genericDAO.persist(product);
+        }
+        else if( productBean != null ){
+            genericDAO.merge(productBean);
+        }
+        return getProducts();
+    }
+
+    @RolesAllowed("users")
+    @POST
+    @Path("delete")
+    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Response deleteProduct(String productId)   {
+        if (productId != null){
+            Product product = (Product) genericDAO.findById(Integer.valueOf(productId));
+            genericDAO.delete(product);
+        }
+
+        return getProducts();
     }
 
 

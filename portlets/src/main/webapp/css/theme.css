@@ -1,3 +1,4 @@
+@import url("./elusive-icons/css/elusive-icons.css");
 .body-sign {
     display: table;
     height: 100vh;
@@ -5,6 +6,10 @@
     max-width: 500px;
     padding: 0 15px;
     width: 100%;
+}
+
+#productList a {
+color: inherit;
 }
 
 body {
