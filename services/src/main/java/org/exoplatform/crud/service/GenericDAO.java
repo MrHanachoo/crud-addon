@@ -19,15 +19,20 @@ import java.util.List;
 public class GenericDAO<T> {
     private static SessionFactory sessionFactory;
     private static ServiceRegistry serviceRegistry;
+    public static Configuration configuration;
     private Class<T> genericType;
     public GenericDAO(Class<T> type){
         genericType=type;
+        if ( configuration == null ){
+            configuration = new Configuration();
+            configuration.configure();
+        }
     }
 
 
     public static SessionFactory createSessionFactory() {
-            Configuration configuration = new Configuration();
-            configuration.configure();
+            //Configuration configuration = new Configuration();
+            //configuration.configure();
             if(sessionFactory==null) {
                 serviceRegistry = new ServiceRegistryBuilder().applySettings(
                         configuration.getProperties()).buildServiceRegistry();
