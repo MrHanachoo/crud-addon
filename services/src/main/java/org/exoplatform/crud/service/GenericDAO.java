@@ -1,14 +1,8 @@
 package org.exoplatform.crud.service;
-
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
-import org.hibernate.service.ServiceRegistryBuilder;
-
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import java.util.List;
 
 /**
@@ -17,109 +11,100 @@ import java.util.List;
  * @date 03/09/15
  */
 public class GenericDAO<T> {
-    private static SessionFactory sessionFactory;
-    private static ServiceRegistry serviceRegistry;
-    public static Configuration configuration;
+    private static EntityManagerFactory emf;
+    private static EntityManager em;
     private Class<T> genericType;
     public GenericDAO(Class<T> type){
         genericType=type;
-        if ( configuration == null ){
-            configuration = new Configuration();
-            configuration.configure();
+    }
+
+    public static EntityManager getEntityManager(){
+        if(emf == null){
+            emf=Persistence.createEntityManagerFactory("crudDb");
         }
+        if (em == null )
+            em = emf.createEntityManager();
+        return em;
     }
 
 
-    public static SessionFactory createSessionFactory() {
-            //Configuration configuration = new Configuration();
-            //configuration.configure();
-            if(sessionFactory==null) {
-                serviceRegistry = new ServiceRegistryBuilder().applySettings(
-                        configuration.getProperties()).buildServiceRegistry();
-                sessionFactory = configuration.buildSessionFactory(serviceRegistry);
-            }
-        return sessionFactory;
-    }
-
-    public Session getSession(){
-        if(sessionFactory==null)
-            sessionFactory=createSessionFactory();
-        return sessionFactory.openSession();
-
-
-    }
 
     public void persist(T t){
-        Session session=getSession();
         try {
-        Transaction tx=session.beginTransaction();
-        session.persist(t);
-        tx.commit();
+        EntityManager em = getEntityManager();
+        if (! em.getTransaction().isActive()) {
+            em.getTransaction().begin();
+        }
+        em.persist(t);
+        em.getTransaction().commit();
         }
         catch(Exception e){
             e.printStackTrace();
         }
-        finally {
-            if(session.isOpen())
-            session.close();
-        }
+
 
     }
 
     public void merge(T t){
-        Session session=getSession();
+
         try {
-            Transaction tx=session.beginTransaction();
-            session.merge(t);
-            tx.commit();
+            EntityManager em = getEntityManager();
+            if (! em.getTransaction().isActive()) {
+                em.getTransaction().begin();
+            }
+            em.merge(t);
+            em.getTransaction().commit();
+
         }
         catch(Exception e){
             e.printStackTrace();
-        }
-        finally {
-            if(session.isOpen())
-                session.close();
         }
 
     }
 
     public void delete(T t){
-        Session session=getSession();
         try{
-            Transaction tx=session.beginTransaction();
-            session.delete(t);
-            tx.commit();
+            EntityManager em = getEntityManager();
+            if (! em.getTransaction().isActive()) {
+                em.getTransaction().begin();
+            }
+            em.remove(em.contains(t) ? t : em.merge(t));
+            em.getTransaction().commit();
         }
-        finally {
-            if(session.isOpen())
-            session.close();
+        catch(Exception e){
+            e.printStackTrace();
         }
+
+
+
     }
 
     public List<T> findAll(){
-        Session session=getSession();
         List<T> result = null;
         try {
-            Query query=session.createQuery("from " + genericType.getSimpleName());
-            result=query.list();
+            EntityManager em = getEntityManager();
+            if (! em.getTransaction().isActive()) {
+                em.getTransaction().begin();
+            }
+            Query query=em.createQuery("Select P from " + genericType.getSimpleName() +" P");
+            result=query.getResultList();
         }
-        finally {
-            if(session.isOpen())
-            session.close();
+        catch(Exception e){
+            e.printStackTrace();
         }
+
         return result;
 
     }
 
     public T findById(int id){
-        Session session=getSession();
         T t=null;
         try {
-            t=(T) session.get(genericType, id);
+            EntityManager em = getEntityManager();
+            t=(T) em.find(genericType, id);
         }
-        finally {
-            if(session.isOpen())
-            session.close();
+        catch(Exception e){
+            e.printStackTrace();
         }
         return t;
     }
