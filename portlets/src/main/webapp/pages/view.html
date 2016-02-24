@@ -55,7 +55,7 @@ $scope.product = modifiedProduct;
 }
 $scope.submitProduct = function(product){
 var pr = {id:product.id,category:product.category,company:product.company,label:product.label,price:product.price};
-$http.post('/rest/productdata/submit',pr).success(function(data) {
+$http.post('/rest/productdata/submit/',pr).success(function(data) {
 $scope.products = data;
 $scope.product = null;
         });
@@ -98,7 +98,7 @@ $scope.product = null;
                 <h2 class="title text-uppercase text-weight-bold m-none"><i class="fa fa-user mr-xs"></i>Product Form</h2>
             </div>
             <div class="panel-body">
-                <form name="productForm" ng-submit="submitProduct(product,componentId)">
+                <form name="productForm">
                     <div class="form-group mb-lg">
                         <input name="category" type="text"  ng-model="product.id" style="display:none;" />
                     </div>
@@ -123,7 +123,7 @@ $scope.product = null;
 
                     <div class="row">
                         <div class="col-sm-4 text-right">
-                            <button type="submit" class="btn btn-primary hidden-xs">Add Product</button>
+                            <button class="btn btn-primary hidden-xs" ng-click="submitProduct(product)">Add Product</button>
                         </div>
                     </div>
 
