@@ -1,4 +1,7 @@
 package org.exoplatform.crud.service;
+import org.exoplatform.container.ExoContainerContext;
+import org.exoplatform.crud.service.impl.EntityManagerServiceImpl;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -11,27 +14,24 @@ import java.util.List;
  * @date 03/09/15
  */
 public class GenericDAO<T> {
-    private static EntityManagerFactory emf;
-    private static EntityManager em;
+    EntityManagerService entityManagerService;
     private Class<T> genericType;
     public GenericDAO(Class<T> type){
         genericType=type;
+        entityManagerService = (EntityManagerService) ExoContainerContext.
+                    getCurrentContainer().getComponentInstanceOfType(EntityManagerService.class);
+
+        if (entityManagerService == null)
+            entityManagerService = new EntityManagerServiceImpl();
     }
 
-    public static EntityManager getEntityManager(){
-        if(emf == null){
-            emf=Persistence.createEntityManagerFactory("crudDb");
-        }
-        if (em == null )
-            em = emf.createEntityManager();
-        return em;
-    }
+
 
 
 
     public void persist(T t){
         try {
-        EntityManager em = getEntityManager();
+        EntityManager em = entityManagerService.getEntityManager();
         if (! em.getTransaction().isActive()) {
             em.getTransaction().begin();
         }
@@ -48,7 +48,7 @@ public class GenericDAO<T> {
     public void merge(T t){
 
         try {
-            EntityManager em = getEntityManager();
+            EntityManager em = entityManagerService.getEntityManager();;
             if (! em.getTransaction().isActive()) {
                 em.getTransaction().begin();
             }
@@ -64,7 +64,7 @@ public class GenericDAO<T> {
 
     public void delete(T t){
         try{
-            EntityManager em = getEntityManager();
+            EntityManager em = entityManagerService.getEntityManager();;
             if (! em.getTransaction().isActive()) {
                 em.getTransaction().begin();
             }
@@ -82,7 +82,7 @@ public class GenericDAO<T> {
     public List<T> findAll(){
         List<T> result = null;
         try {
-            EntityManager em = getEntityManager();
+            EntityManager em = entityManagerService.getEntityManager();;
             if (! em.getTransaction().isActive()) {
                 em.getTransaction().begin();
             }
@@ -100,7 +100,7 @@ public class GenericDAO<T> {
     public T findById(int id){
         T t=null;
         try {
-            EntityManager em = getEntityManager();
+            EntityManager em = entityManagerService.getEntityManager();;
             t=(T) em.find(genericType, id);
         }
         catch(Exception e){

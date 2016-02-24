@@ -23,4 +23,8 @@
 	<component>
         <type>org.exoplatform.crud.service.ProductsRest</type>
     </component>
+    <component>
+        <key>org.exoplatform.crud.service.EntityManagerService</key>
+        <type>org.exoplatform.crud.service.impl.EntityManagerServiceImpl</type>
+    </component>
 </configuration>
